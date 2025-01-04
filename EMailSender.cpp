@@ -459,9 +459,9 @@ EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte s
 
 #ifndef PJW_ORIG
 // Taken from the Multiple networking class as we need to preserve RAM
-extern   int      tmpBufferSize;
-extern   uint8_t  tmpBuffer[];
-uint8_t *tBuf = tmpBuffer;
+extern   int      scratchBufferSize;
+extern   uint8_t  scratchBuffer[];
+uint8_t *tBuf = scratchBuffer;
 #endif
 EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte sizeOfCc,byte sizeOfCCn, EMailMessage &email, Attachments attachments)
 {
@@ -899,7 +899,7 @@ EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte s
 					  }else{
 						while(myFile.available()) {
 #ifndef PJW_ORIG
-						clientCount = myFile.read(tBuf,tmpBufferSize);
+						clientCount = myFile.read(tBuf,scratchBufferSize);
 #else
 						clientCount = myFile.read(tBuf,64);
 #endif
@@ -970,7 +970,7 @@ EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte s
 					  DEBUG_PRINTLN(F("NORMAL"));
 					while(myFile.available()) {
 #ifndef PJW_ORIG
-						clientCount = myFile.read(tBuf,tmpBufferSize);
+						clientCount = myFile.read(tBuf,scratchBufferSize);
 #else
 						clientCount = myFile.read(tBuf,64);
 #endif
